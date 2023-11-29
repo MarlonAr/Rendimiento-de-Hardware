@@ -1,3 +1,5 @@
+import subprocess
+import time
 import psutil
 
 def get_cpu_usage():
@@ -25,6 +27,20 @@ def get_cpu_temperature():
     except (AttributeError, KeyError, IndexError):
         return -1
 
+def ping_ip(ip_address):
+    command = ['ping', '-c', '4', ip_address]
+    result = subprocess.run(command, capture_output=True, text=True)
+    print(f"Tiempo de respuesta para la IP {ip_address}:")
+    for respuesta in result.stdout.splitlines():
+        if not respuesta.strip().startswith("Ping"):
+            continue
+        tiempo_de_respuesta = float(respuesta.split()[5])
+        print(f"Tiempo de respuesta: {tiempo_de_respuesta} segundos")
+
+def obtener_rendimiento_cpu(ip_address):
+    cpu_percent = psutil.cpu_percent(interval=1)
+    print(f"Uso de CPU para la IP {ip_address}: {cpu_percent}%")
+
 if __name__ == "__main__":
     # Muestra el rendimiento del CPU
     print("Uso del CPU:", get_cpu_usage())
@@ -38,3 +54,9 @@ if __name__ == "__main__":
     # Muestra la temperatura del CPU
     print("Temperatura del CPU:", get_cpu_temperature())
 
+    ips = ["10.3.21.194", "10.3.21.195", "10.3.21.196", "10.3.21.197"]
+
+    for ip in ips:
+        ping_ip(ip)
+        obtener_rendimiento_cpu(ip)
+        time.sleep(1)
