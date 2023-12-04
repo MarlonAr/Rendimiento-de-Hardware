@@ -27,7 +27,7 @@ def obtener_temperatura_cpu():
 
 if __name__ == "__main__":
     # Muestra el rendimiento del CPU
-    print("Rendimiento del CPU (%):", obtener_rendimiento_cpu())
+    print("Rendimiento del CPU es (%):", obtener_rendimiento_cpu())
     # Muestra el rendimiento de la memoria
     print("Rendimiento de la Memoria (%):", obtener_rendimiento_memoria())
     # Muestra el rendimiento de la red
